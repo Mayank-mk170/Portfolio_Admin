@@ -6,10 +6,7 @@ const showToast = (
 ) => {
     window.dispatchEvent(
         new CustomEvent("app-toast", {
-            detail: {
-                message,
-                type,
-            },
+            detail: { message, type },
         })
     );
 };
@@ -21,7 +18,6 @@ const api = axios.create({
     },
 });
 
-// Add JWT token to every request
 api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem("adminToken");
@@ -35,7 +31,6 @@ api.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
-// Handle successful responses
 api.interceptors.response.use(
     (response) => {
         const method = response.config.method?.toLowerCase();
@@ -57,8 +52,6 @@ api.interceptors.response.use(
 
         return response;
     },
-
-    // Handle errors
     (error) => {
         let message = "Something went wrong";
 
